@@ -3,35 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bien;
-use App\Http\Requests\StoreBienRequest;
-use App\Http\Requests\UpdateBienRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+
 
 class BienController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+   
+     public function ListeBien()
+     {
+         $biens = Bien::all();
+         return view('biens.liste', compact('biens'));
+     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+ 
+     public function create()
+     {
+       
+         return view('biens.ajout');
+     }
+     public function Ajouter(Request $request)
+     {
+        //dd($request->all()); 
+     
+         $request->validate([
+             'nom' => 'required',
+             'categorie' => 'required',
+             'adresse' => 'required',
+             'status' => 'required',
+             'date' => 'required',
+         ]);
+     
+         
+             // Créer une nouvelle instance de Bien
+             $bien = new Bien();
+             $bien->nom = $request->get('nom');
+             $bien->categorie = $request->get('categorie');
+             $bien->description = $request->get('description'); 
+             $bien->adresse = $request->get('adresse');
+             $bien->status = $request->get('status');
+             $bien->date_enregistrement = $request->get('date');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreBienRequest $request)
-    {
-        //
-    }
+             $bien->user_id = auth()->user()->id;
 
+             if ($bien->save()) 
+             {
+              //  dd($bien); 
+                 return redirect('/biens/liste');
+
+             } else {
+                return 'bonjour';
+             }
+    }
+     
+    
     /**
      * Display the specified resource.
      */
@@ -51,7 +80,7 @@ class BienController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBienRequest $request, Bien $bien)
+    public function update( $request, Bien $bien)
     {
         //
     }
