@@ -1,4 +1,4 @@
-@extends('layout.nav')
+@extends('layout.master')
 @section('contenue')
 <div class="container">
     <div class="row">
