@@ -9,24 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('biens', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+   // Dans la migration de la table 'biens'
+        public function up()
+        {
+            Schema::create('biens', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('user_id');
+                $table->enum('nom', ['studio', 'duplex', 'appartement']);
+                $table->enum('categorie', ['luxe', 'simple', 'moyen']);
+                $table->string('image')->nullable();
+                $table->text('description')->nullable(); // Assurez-vous que cette ligne est ajoutée
+                $table->string('adresse')->nullable();
+                $table->enum('status', ['occuper', 'disponible'])->nullable();
+                $table->timestamp('date_enregistrement')->useCurrent();
+                $table->timestamps();
 
-            $table->enum('nom', ['studio ','duplex','appartement']);
-            $table->enum('categorie', ['luxe','simple','moyen']);
-            $table->string('image')->nullable();
-            $table->text('descrition')->nullable();
-            $table->string('adresse')->nullable();
-            $table->enum('status',['occuper','disponible'])->nullable();
-            $table->timestamp('date_enregistrement')->useCurrent();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
 
-            $table->timestamps();
-        });
-    }
 
     /**
      * Reverse the migrations.

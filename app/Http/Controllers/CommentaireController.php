@@ -13,7 +13,10 @@ class CommentaireController extends Controller
      */
     public function index()
     {
-        //
+    
+        $commentaires  = Commentaire::all();
+
+        return view('commentaires.index', compact('commentaires'));
     }
 
     /**
@@ -27,9 +30,15 @@ class CommentaireController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentaireRequest $request)
+    public function store()
     {
-        //
+        $data = request()->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+            'message'=> 'required|'
+        ]);
+        Commentaire::create($data);
+        return back();
     }
 
     /**

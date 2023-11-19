@@ -73,13 +73,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Matiere</span>
+                    <span>Commentaires</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestion des users:</h6>
-                        <a class="collapse-item" href="/matieres">Liste user</a>
-                        <a class="collapse-item" href="/matieres/ajout">supprimer users</a>
+                        <h6 class="collapse-header">Gestions des commentaires</h6>
+                        <a class="collapse-item" href="/commentaires">Afficher un commentaire</a>
+                        <a class="collapse-item" href="/commentaires/">liste un commentaire</a>
                     </div>
                 </div>
             </li>
