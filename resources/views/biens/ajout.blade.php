@@ -6,7 +6,7 @@
                 <h5 class="card-header text-center bg-primary text-white">AJOUT BIEN</h5>
                 <div class="card-body">
 
-                    <form method="post" action="/AjoutBien" >
+                    <form method="post" action="/AjoutBien" enctype="multipart/form-data" >
                         @csrf
 
                         <div class="form-group" >
@@ -26,6 +26,11 @@
                         </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="photo">
+                        Ajoutez une photo <br /></label>
+                    <input type="file" id="photo" name="image" />
+                </div>
 
                         <div class="form-group">
                             <label for="nomDescrition">Description</label>

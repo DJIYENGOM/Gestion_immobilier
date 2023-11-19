@@ -14,7 +14,7 @@ class BienController extends Controller
      * Display a listing of the resource.
      */
    
-     public function ListeBien()
+     public function index()
      {
          $biens = Bien::all();
          return view('biens.liste', compact('biens'));
@@ -33,16 +33,20 @@ class BienController extends Controller
          $request->validate([
              'nom' => 'required',
              'categorie' => 'required',
+             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
              'adresse' => 'required',
              'status' => 'required',
              'date' => 'required',
          ]);
      
          
-             // Créer une nouvelle instance de Bien
+         // Stocker l'image sur le serveur
+            $imagePath = $request->file('image')->store('image');
+
              $bien = new Bien();
              $bien->nom = $request->get('nom');
              $bien->categorie = $request->get('categorie');
+             $bien->image = $imagePath; 
              $bien->description = $request->get('description'); 
              $bien->adresse = $request->get('adresse');
              $bien->status = $request->get('status');
@@ -59,14 +63,51 @@ class BienController extends Controller
                 return 'bonjour';
              }
     }
+
+    // private function storeImage($image):string{
+    //     return $image-> Ajouter('images',storage) ;
+
+
+    // }
      
     
-    /**
-     * Display the specified resource.
-     */
-    public function show(Bien $bien)
+
+    public function UpdateBien($id)
     {
-        //
+        $bien = Bien::find($id);
+        return view('biens.modifier', compact('bien'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function UpdatebienTraitement(Request $request)
+    {
+        $bienreq = $request->validate([
+            'nom' => 'required',
+            'categorie' => 'required',
+            'adresse' => 'required',
+            'status' => 'required',
+            'date' => 'required',
+        ]);
+        $bien = bien::find($request->id);
+        $bien->nom = $request->get('nom');
+             $bien->categorie = $request->get('categorie');
+             $bien->description = $request->get('description'); 
+             $bien->adresse = $request->get('adresse');
+             $bien->status = $request->get('status');
+             $bien->date_enregistrement = $request->get('date');
+
+        $bien->Update();
+        return redirect('/biens/liste');
+    }
+
+    public function DeleteBien($id)
+    {
+        $biens = Bien::find($id);
+        if ($biens->delete()) { 
+            return redirect('/biens/liste');
+        }
     }
 
     /**
@@ -77,13 +118,6 @@ class BienController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update( $request, Bien $bien)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

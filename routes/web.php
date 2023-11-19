@@ -6,10 +6,16 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/biens/liste', [BienController::class,'ListeBien']);
-
+Route::get('/biens/liste', [BienController::class,'index']);
 Route::get('/Ajout', [BienController::class,'create']);
 Route::post('/AjoutBien', [BienController::class,'Ajouter']);
+
+Route::get('bien/{id}', [BienController::class,'show']);// pour la voir plus
+
+Route::get('modifierbien/{id}', [BienController::class,'Updatebien']);
+Route::post('/modifierbien/traitement', [BienController::class,'UpdatebienTraitement']);
+Route::get('/supprimerbien/{id}', [BienController::class,'DeleteBien']);
+
 
 
 

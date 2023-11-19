@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->enum('nom', ['studio ','duplex','appartement']);
             $table->enum('categorie', ['luxe','simple','moyen']);
+            $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->string('adresse')->nullable();
             $table->enum('status',['occuper','disponible'])->nullable();
