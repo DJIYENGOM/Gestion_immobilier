@@ -40,9 +40,13 @@ require __DIR__.'/auth.php';
 //     return view('commentaires.ajout');
 // });
 
+//Index
 Route::get('/commentaires', 'App\Http\Controllers\CommentaireController@index');
+//Strore
 Route::post('/commentaires', 'App\Http\Controllers\CommentaireController@store');
+//Show
 Route::get('commentaires/{commentaire}', 'App\Http\Controllers\CommentaireController@show');
+//Create 
 Route::get('commentaires/create', 'App\Http\Controllers\CommentaireController@create');
-
+//Delete
 Route::delete('commentaires/{commentaire}', 'App\Http\Controllers\CommentaireController@destroy');

@@ -10,7 +10,7 @@
                 <p><strong>Contenu:</strong> {{ $commentaire->contenue }}</p>
                 <p><strong>Date de publication:</strong> {{ $commentaire->date_publication }}</p>
                 {{-- @if(auth()->user() && auth()->user()->role === 'admin') --}}
-                <form action="/clients/{{$commentaire->id}}" method="POST" style="display: inline">
+                <form action="/commentaires/{{$commentaire->id}}" method="POST" style="display: inline">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger">Supprimer</button>
