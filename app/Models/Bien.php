@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Bien extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nom',
+        'categorie',
+        'image',
+        'description', 
+        'adresse',
+        'status',
+        'date_enregistrement',
+        'user_id',
+    ];
+    
 }
+
