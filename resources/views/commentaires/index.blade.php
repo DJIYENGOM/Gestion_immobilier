@@ -5,7 +5,7 @@
 <div class="container">
     <h1>Liste des Commentaires</h1>
 
-    <a href="/commentaires/create" class="btn btn-primary">Nouveau Commentaire</a>
+    <a href="commentaires/create" class="btn btn-primary">Nouveau Commentaire</a>
 
     @foreach ($commentaires as $commentaire)
         <div class="card my-2">

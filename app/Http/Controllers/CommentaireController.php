@@ -24,25 +24,28 @@ class CommentaireController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        $biens = Bien::all();
-        $comments = new Commentaire();
-        return view('commentaires.create',compact('users', 'biens','comments'));
+        $biens = Bien::all(); 
+        return view('commentaires.create', compact('biens'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(Request $request)
     {
-        $data = request()->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email',
-            'message'=> 'required|'
+         $request->validate([
+            'bien_id' => 'required|exists:biens,id',
+            'contenue' => 'required',
+         ]);
+    
+        Commentaire::create([
+        'user_id' => auth()->id(),
+        'bien_id' => $request->bien_id,
+        'contenue' => $request->contenue,
         ]);
-        Commentaire::create($data);
-        return back();
+        return redirect('/commentaires')->with('success', 'Commentaire créé avec succès.');
     }
+
 
     /**
      * Display the specified resource.
@@ -72,7 +75,7 @@ class CommentaireController extends Controller
      */
     public function destroy(Commentaire $commentaire)
     {
-        $this->authorize('delete', $commentaire);
+        // $this->authorize('delete', $commentaire);
         $commentaire->delete();
         // return redirect('/commentaire');
         return redirect('/commentaires')->with('success', 'Commentaire supprimé avec succès.');
