@@ -13,7 +13,7 @@ class CommentaireController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -21,7 +21,7 @@ class CommentaireController extends Controller
      */
     public function create()
     {
-        //
+        return view("commentaires.ajout");
     }
 
     /**
@@ -29,7 +29,17 @@ class CommentaireController extends Controller
      */
     public function store(StoreCommentaireRequest $request)
     {
-        //
+        $request->validate([
+            'contenue' => 'required|string',
+        ]);
+    
+        $currentDate = now();
+        $commentaires = new Commentaire();
+        $commentaires->contenue = $request->contenue;
+        $commentaires->date = $currentDate;
+
+    
+        return redirect()->route('commentaires.index')->with('success', 'Commentaire ajouté avec succès.');
     }
 
     /**
