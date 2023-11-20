@@ -13,6 +13,7 @@ class BienController extends Controller
     /**
      * Display a listing of the resource.
      */
+
    
      public function index()
      {
@@ -28,8 +29,8 @@ class BienController extends Controller
      }
      public function Ajouter(Request $request)
      {
-        //dd($request->all()); 
-     
+
+        
          $request->validate([
              'nom' => 'required',
              'categorie' => 'required',
@@ -109,6 +110,7 @@ class BienController extends Controller
             return redirect('/biens/liste');
         }
     }
+    
 
     /**
      * Show the form for editing the specified resource.

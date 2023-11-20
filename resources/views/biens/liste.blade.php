@@ -8,8 +8,9 @@
                         <div class="card-header">
                             <h5 class="card-title">{{$bien->nom}}</h5>
                         </div>
+
                        
-                                <img src="{{asset('storage/'.$bien->image)}}" alt="" width="100%" height="100%">
+                          <img src="{{asset('storage/'.$bien->image)}}" alt="" width="100%" height="100%">
                        
                         <div class="card-body">
                             <h5 class="card-title">{{$bien->description}}</h5>
@@ -17,8 +18,10 @@
                             <a href="/modifierbien/{{$bien->id}}" class="btn btn-primary">Modifier</a>
                             <a href="/supprimerbien/{{$bien->id }}" class="btn btn-danger">Supprimer</a>
                         </div>
+
                     </div>
                 </div>
+
             @endforeach
         </div>
     </div>

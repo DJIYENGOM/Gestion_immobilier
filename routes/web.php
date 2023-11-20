@@ -16,12 +16,6 @@ Route::get('modifierbien/{id}', [BienController::class,'Updatebien']);
 Route::post('/modifierbien/traitement', [BienController::class,'UpdatebienTraitement']);
 Route::get('/supprimerbien/{id}', [BienController::class,'DeleteBien']);
 
-
-
-
-
-
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -35,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';
 

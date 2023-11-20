@@ -47,15 +47,14 @@
                             <input type="text" class="form-control" id="nomAdresse"  value="{{$bien->adresse}}"
                                 name="adresse">
                         </div>
-
                         <div class="form-group" >
                             <label for="">Status</label>
                             <select name="status" id="" >
                                 <option value="disponible">Disponible</option>
                                 <option value="occuper">Occuper </option>
+
                             </select>
                     </div>
-
                     <div class="form-group">
                         <label for="">Date</label>
                         <input type="date" class="form-control" id="" value="{{$bien->date_enregistrement}}"
@@ -63,6 +62,7 @@
                     </div>
                         <button type="submit" class="btn btn-primary offset-4 mt-2">Modifier</button>
                     </form>
+                    
                 </div>
             </div>
         </div>
