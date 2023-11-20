@@ -24,7 +24,10 @@ class CommentaireController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        $biens = Bien::all();
+        $comments = new Commentaire();
+        return view('commentaires.create',compact('users', 'biens','comments'));
     }
 
     /**
@@ -46,9 +49,8 @@ class CommentaireController extends Controller
      */
     public function show(Commentaire $commentaire)
     {
-        //
+        return view('commentaires.show', compact('commentaire'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -70,6 +72,10 @@ class CommentaireController extends Controller
      */
     public function destroy(Commentaire $commentaire)
     {
-        //
+        $this->authorize('delete', $commentaire);
+        $commentaire->delete();
+        // return redirect('/commentaire');
+        return redirect('/commentaires')->with('success', 'Commentaire supprimé avec succès.');
+
     }
 }

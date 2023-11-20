@@ -42,7 +42,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/commentaires', 'App\Http\Controllers\CommentaireController@index');
 Route::post('/commentaires', 'App\Http\Controllers\CommentaireController@store');
+Route::get('commentaires/{commentaire}', 'App\Http\Controllers\CommentaireController@show');
 Route::get('commentaires/create', 'App\Http\Controllers\CommentaireController@create');
 
-
-
+Route::delete('commentaires/{commentaire}', 'App\Http\Controllers\CommentaireController@destroy');
