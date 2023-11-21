@@ -21,9 +21,8 @@ Route::middleware('isAdmin')->group(function () {
     Route::get('/commentaires/supprimer/{commentaireId}', [BienController::class, 'supprimerCommentaire'])->name('commentaires.supprimer');
 });
 Route::get('/biens/listeUser', [BienController::class, 'listeBien']);
-Route::get('/commentaires/ajoutCommentaire/{bienId}', [CommentaireController::class, 'create']);
+// Route::get('/commentaires/ajoutCommentaire/{bienId}', [CommentaireController::class, 'create']);
 Route::get('/commentaires/ajout/{bienId}', [CommentaireController::class, 'creer']);
-
 Route::post('/commentaires/ajoute', [CommentaireController::class, 'store']);
 
 

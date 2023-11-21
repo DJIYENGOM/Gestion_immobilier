@@ -20,9 +20,9 @@
                             </div>
                             <h5 class="card-title">{{$bien->description}}</h5>
                             <h5 class="card-title">{{$bien->created_at}}</h5>
-                            <a href="/modifierbien/{{$bien->id}}" class="btn btn-primary">Modifier</a>
-                            <a href="/biensCommentaires/{{$bien->id}}" class="btn btn-primary">Commentaires</a>
-                            <a href="/supprimerbien/{{$bien->id }}" class="btn btn-danger">Supprimer</a>
+                            <a href="/modifierbien/{{$bien->id}}" class="btn btn-primary">🖌</a>
+                            <a href="/biensCommentaires/{{$bien->id}}" class="btn btn-secondary">Liste Avis</a>
+                            <a href="/supprimerbien/{{$bien->id }}" class="btn btn-danger">🗑</a>
                         </div>
 
                     </div>
