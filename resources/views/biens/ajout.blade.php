@@ -51,12 +51,12 @@
                                 <option value="occuper">Occuper </option>
                             </select>
                     </div>
-
+<!-- 
                     <div class="form-group">
                         <label for="">Date</label>
                         <input type="date" class="form-control" id="" placeholder="Enter la date"
                             name="date">
-                    </div>
+                    </div> -->
 
                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">                   
 

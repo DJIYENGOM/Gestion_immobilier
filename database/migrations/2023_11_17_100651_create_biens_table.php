@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('adresse')->nullable();
             $table->enum('status',['occuper','disponible'])->nullable();
-            $table->timestamp('date_enregistrement')->useCurrent();
+            // $table->timestamp('date_enregistrement')->useCurrent();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
