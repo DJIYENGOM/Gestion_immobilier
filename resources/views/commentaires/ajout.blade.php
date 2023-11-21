@@ -23,17 +23,28 @@
                 <p class="d-flex justify-content-between">Nombre de commentaires
                     <span class=" rounded-pill">{{ $bien->commentaires->count() }}</span>
                 </p>
-                @foreach($bien->commentaires as $commentaire)
-                <p class="card-text">{{ $commentaire->user->name }} {{ $commentaire->user->prenom }}</p>
-                <span class=" rounded-pill">{{ $commentaire->contenue }}</span>
-                @endforeach
-                <a href="/Accueil" class="btn btn-info">Retour</a>
-                <a href="/login" class="btn btn-info">Commenter</a>
+                <a href="{{'/biens/listeUser'}}" class="btn btn-info">Retour</a>
             </div>
-
-
         </div>
     </div>
-
+</div>
+<div class="container">
+    <h2>Ajouter un commentaire</h2>
+    <form action="/commentaires/ajoute" method="post">
+        @csrf
+        <div class="form-group">
+            <label for="contenue">Contenu du commentaire</label>
+            <textarea class="form-control" id="contenue" name="contenue" rows="4" required></textarea>
+        </div>
+        <input type="hidden" name="bien_id" value="{{ $bien->id }}">
+        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+        <button type="submit" class="btn btn-primary offset-4 mt-2">Soumettre</button>
+    </form>
+</div>
+<div class="class">
+    @foreach($bien->commentaires as $commentaire)
+    <p class="card-text">{{ $commentaire->user->name }} {{ $commentaire->user->prenom }}</p>
+    <span class=" rounded-pill">{{ $commentaire->contenue }}</span>
+    @endforeach
 </div>
 @endsection

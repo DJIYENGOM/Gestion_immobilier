@@ -20,7 +20,7 @@
                             </div>
                             <h5 class="card-title">{{$bien->description}}</h5>
                             <h5 class="card-title">{{$bien->created_at}}</h5>
-                            <a href="/commentaires/ajout/{{$bien->id}}" class="btn btn-primary">Voir Plus</a>
+                            <a href="/login" class="btn btn-primary">Voir Plus</a>
                         </div>
 
                     </div>
