@@ -24,10 +24,16 @@ class CommentaireController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($bienId)
+   
+    public function creer($bienId)
     {
         $bien = Bien::find($bienId);
         return view("commentaires.ajout", compact("bien"));
+    }
+    public function create($bienId)
+    {
+        $bien = Bien::find($bienId);
+        return view("commentaires.ajoutCommentaire", compact("bien"));
     }
 
     /**
@@ -48,8 +54,7 @@ class CommentaireController extends Controller
             // 'user_id' => $request->input('user_id'),
             'user_id' => Auth::id(),
         ]);
-        // $commentaires->contenue = $request->contenue;
-        // $commentaires->date = $currentDate;
+        
         $bien = Bien::findOrFail($request->input('bien_id'));
         $bien->commentaires()->save($commentaires);
 

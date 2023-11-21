@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BienController;
 use App\Http\Controllers\UserController;
@@ -20,19 +21,19 @@ Route::middleware('isAdmin')->group(function () {
     Route::get('/commentaires/supprimer/{commentaireId}', [BienController::class, 'supprimerCommentaire'])->name('commentaires.supprimer');
 });
 Route::get('/biens/listeUser', [BienController::class, 'listeBien']);
-Route::get('/commentaires/ajout/{bienId}', [CommentaireController::class, 'create']);
+Route::get('/commentaires/ajoutCommentaire/{bienId}', [CommentaireController::class, 'create']);
+Route::get('/commentaires/ajout/{bienId}', [CommentaireController::class, 'creer']);
+
 Route::post('/commentaires/ajoute', [CommentaireController::class, 'store']);
 
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [Controller::class, 'index']);
 
-Route::get('/dashboard', function () {
+Route::get('/biens/ajout', function () {
     return view('biens.ajout');
-})->middleware(['auth', 'verified','isAdmin'])->name('dashboard');
+})->middleware(['auth', 'verified','isAdmin']);
 
 
 Route::middleware('auth')->group(function () {

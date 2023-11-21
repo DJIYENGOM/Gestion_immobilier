@@ -26,6 +26,7 @@ class BienController extends Controller
         $biens = Bien::all();
         return view('biens.listeUser', compact('biens'));
     }
+   
 
 
     public function create()
@@ -36,12 +37,13 @@ class BienController extends Controller
     public function Ajouter(Request $request)
     {
 
-
+// dd($request);
         $request->validate([
             'nom' => 'required',
             'categorie' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,avif',
             'adresse' => 'required',
+            'description' => 'required',
             'status' => 'required',
         ]);
 
@@ -109,21 +111,21 @@ class BienController extends Controller
 
 
 
-public function show($id)
-{
-    $bien = Bien::find($id);
+    public function show($id)
+    {
+        $bien = Bien::find($id);
 
-    $commentaires = Commentaire::with('user')->where('bien_id', $id)->get();
+        $commentaires = Commentaire::with('user')->where('bien_id', $id)->get();
 
-    return view('commentaires.liste', compact('bien', 'commentaires'));
-}
-public function supprimerCommentaire($commentaireId)
-{
-    $commentaire = Commentaire::find($commentaireId);
-    $commentaire->delete();
+        return view('commentaires.liste', compact('bien', 'commentaires'));
+    }
+    public function supprimerCommentaire($commentaireId)
+    {
+        $commentaire = Commentaire::find($commentaireId);
+        $commentaire->delete();
 
-    return redirect()->back()->with('success', 'Le commentaire a été supprimé avec succès.');
-}
+        return redirect()->back()->with('success', 'Le commentaire a été supprimé avec succès.');
+    }
 
 
     /**
