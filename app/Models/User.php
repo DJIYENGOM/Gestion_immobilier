@@ -25,7 +25,18 @@ class User extends Authenticatable
         'role',
 
     ];
-    
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class);
+    }
+    public function bien()
+    {
+        return $this->hasMany(Bien::class);
+    }
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 
     /**
      * The attributes that should be hidden for serialization.

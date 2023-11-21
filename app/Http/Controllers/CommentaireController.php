@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bien;
 use App\Models\Commentaire;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCommentaireRequest;
 use App\Http\Requests\UpdateCommentaireRequest;
 
@@ -19,28 +24,46 @@ class CommentaireController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+   
+    public function creer($bienId)
     {
-        return view("commentaires.ajout");
+        $bien = Bien::find($bienId);
+        return view("commentaires.ajout", compact("bien"));
+    }
+    public function create($bienId)
+    {
+        $bien = Bien::find($bienId);
+        return view("commentaires.ajoutCommentaire", compact("bien"));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentaireRequest $request)
+    public function store(Request $request)
     {
         $request->validate([
             'contenue' => 'required|string',
+            'bien_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
+
         ]);
     
         $currentDate = now();
-        $commentaires = new Commentaire();
-        $commentaires->contenue = $request->contenue;
-        $commentaires->date = $currentDate;
+        $commentaires = new Commentaire([
+            'contenue'=> $request->input('contenue'),
+            // 'user_id' => $request->input('user_id'),
+            'user_id' => Auth::id(),
+        ]);
+        
+        $bien = Bien::findOrFail($request->input('bien_id'));
+        $bien->commentaires()->save($commentaires);
 
+        return back()->with('success', 'Commentaire ajouté avec succès');
     
-        return redirect()->route('commentaires.index')->with('success', 'Commentaire ajouté avec succès.');
     }
+    
+
+   
 
     /**
      * Display the specified resource.

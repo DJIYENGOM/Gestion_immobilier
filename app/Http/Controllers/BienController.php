@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bien;
+use App\Models\Commentaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -14,64 +15,61 @@ class BienController extends Controller
      * Display a listing of the resource.
      */
 
+
+    public function index()
+    {
+        $biens = Bien::all();
+        return view('biens.liste', compact('biens'));
+    }
+    public function listeBien()
+    {
+        $biens = Bien::all();
+        return view('biens.listeUser', compact('biens'));
+    }
    
-     public function index()
-     {
-         $biens = Bien::all();
-         return view('biens.liste', compact('biens'));
-     }
 
- 
-     public function create()
-     {
-       
-         return view('biens.ajout');
-     }
-     public function Ajouter(Request $request)
-     {
 
-        
-         $request->validate([
-             'nom' => 'required',
-             'categorie' => 'required',
-             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
-             'adresse' => 'required',
-             'status' => 'required',
-             'date' => 'required',
-         ]);
-     
-         
-         // Stocker l'image sur le serveur
-            $imagePath = $request->file('image')->store('image');
+    public function create()
+    {
 
-             $bien = new Bien();
-             $bien->nom = $request->get('nom');
-             $bien->categorie = $request->get('categorie');
-             $bien->image = $imagePath; 
-             $bien->description = $request->get('description'); 
-             $bien->adresse = $request->get('adresse');
-             $bien->status = $request->get('status');
-             $bien->date_enregistrement = $request->get('date');
+        return view('biens.ajout');
+    }
+    public function Ajouter(Request $request)
+    {
 
-             $bien->user_id = auth()->user()->id;
+// dd($request);
+        $request->validate([
+            'nom' => 'required',
+            'categorie' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,avif',
+            'adresse' => 'required',
+            'description' => 'required',
+            'status' => 'required',
+        ]);
 
-             if ($bien->save()) 
-             {
-              //  dd($bien); 
-                 return redirect('/biens/liste');
+        $bien = new Bien();
+        $bien->nom = $request->get('nom');
+        $bien->categorie = $request->get('categorie');
+        $bien->image = $this->storeImage($request->file('image'));
+        $bien->description = $request->get('description');
+        $bien->adresse = $request->get('adresse');
+        $bien->status = $request->get('status');
 
-             } else {
-                return 'bonjour';
-             }
+        $bien->user_id = auth()->user()->id;
+
+        if ($bien->save()) {
+            return redirect('/biens/liste');
+        } else {
+            return 'bonjour';
+        }
     }
 
-    // private function storeImage($image):string{
-    //     return $image-> Ajouter('images',storage) ;
+    private function storeImage($image): string
+    {
+        return $image->store('images', 'public');
+    }
 
 
-    // }
-     
-    
 
     public function UpdateBien($id)
     {
@@ -86,18 +84,18 @@ class BienController extends Controller
     {
         $bienreq = $request->validate([
             'nom' => 'required',
+            'image' => 'required',
             'categorie' => 'required',
             'adresse' => 'required',
             'status' => 'required',
-            'date' => 'required',
         ]);
         $bien = bien::find($request->id);
         $bien->nom = $request->get('nom');
-             $bien->categorie = $request->get('categorie');
-             $bien->description = $request->get('description'); 
-             $bien->adresse = $request->get('adresse');
-             $bien->status = $request->get('status');
-             $bien->date_enregistrement = $request->get('date');
+        $bien->image = $request->get('image');
+        $bien->categorie = $request->get('categorie');
+        $bien->description = $request->get('description');
+        $bien->adresse = $request->get('adresse');
+        $bien->status = $request->get('status');
 
         $bien->Update();
         return redirect('/biens/liste');
@@ -106,11 +104,29 @@ class BienController extends Controller
     public function DeleteBien($id)
     {
         $biens = Bien::find($id);
-        if ($biens->delete()) { 
+        if ($biens->delete()) {
             return redirect('/biens/liste');
         }
     }
-    
+
+
+
+    public function show($id)
+    {
+        $bien = Bien::find($id);
+
+        $commentaires = Commentaire::with('user')->where('bien_id', $id)->get();
+
+        return view('commentaires.liste', compact('bien', 'commentaires'));
+    }
+    public function supprimerCommentaire($commentaireId)
+    {
+        $commentaire = Commentaire::find($commentaireId);
+        $commentaire->delete();
+
+        return redirect()->back()->with('success', 'Le commentaire a été supprimé avec succès.');
+    }
+
 
     /**
      * Show the form for editing the specified resource.

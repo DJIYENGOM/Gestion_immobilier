@@ -16,9 +16,12 @@ class Bien extends Model
         'description', 
         'adresse',
         'status',
-        'date_enregistrement',
         'user_id',
     ];
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class);
+    }
     
 }
 
