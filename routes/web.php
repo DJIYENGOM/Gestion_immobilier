@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BienController;
@@ -31,7 +30,6 @@ Route::post('/comments/edit/{id}', [CommentaireController::class, 'update'])->na
 Route::get('/supprimercomment/{id}', [CommentaireController::class, 'destroy']);
 
 
-
 Route::get('/', [Controller::class, 'index']);
 
 Route::get('/biens/ajout', function () {
@@ -44,6 +42,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 require __DIR__ . '/auth.php';
