@@ -45,6 +45,12 @@
     @foreach($bien->commentaires as $commentaire)
     <p class="card-text">{{ $commentaire->user->name }} {{ $commentaire->user->prenom }}</p>
     <span class=" rounded-pill">{{ $commentaire->contenue }}</span>
+
+    <a href="/comments/edit/{{$commentaire->id}}" class="btn btn-primary">🖌</a>
+
+    <a href="/supprimercomment/{{$commentaire->id}}" class="btn btn-danger">🗑</a>
+
+
     @endforeach
 </div>
 @endsection

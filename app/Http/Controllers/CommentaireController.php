@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCommentaireRequest;
 use App\Http\Requests\UpdateCommentaireRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class CommentaireController extends Controller
 {
@@ -63,37 +64,47 @@ class CommentaireController extends Controller
     }
     
 
-   
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Commentaire $commentaire)
+    public function edit($id)
     {
-        //
+        $commentaire = Commentaire::findOrFail($id);
+
+        if (auth()->id() !== $commentaire->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+        return view('commentaires.modifie', compact('commentaire'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Commentaire $commentaire)
+    public function update(Request $request, $id)
     {
-        //
+        $commentaire = Commentaire::findOrFail($id);
+        if (auth()->id() !== $commentaire->user_id) {
+            abort(403, "Vous n'etes pas autorisé à faire cette action.");
+        }
+        // Validate the request
+        $request->validate([
+            'contenue' => 'required',
+        ]);
+        // Update the comment
+        $commentaire->update([
+            'contenue' => $request->input('contenue'),
+        ]);
+        $bienId=$commentaire->bien_id;
+        //dd($bienId);
+
+        return Redirect::route('modifieCommentaire', ['bienId'=>$bienId])->with('success','');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCommentaireRequest $request, Commentaire $commentaire)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Commentaire $commentaire)
+    
+    public function destroy($id)
     {
-        //
+        $commentaire = Commentaire::findOrFail($id);
+        // Check if the logged-in user is the owner of the comment
+        if (auth()->id() !== $commentaire->user_id) {
+            abort(403, "Vous n'etes pas autorisé à faire cette action.");
+        }
+        // Delete the comment
+        $commentaire->delete();
+        return redirect()->back()->with('success', 'Comment deleted successfully.');
     }
 }

@@ -11,7 +11,7 @@
                             <span class="card-title"> {{$bien->adresse}}</span>
                             </div>
                         </div>
-                          <img src="{{asset('storage/'.$bien->image)}}" alt="" width="253" height="100">
+                          <img src="{{asset('storage/'.$bien->image)}}" alt="" width="242" height="100">
                        
                         <div class="card-body">
                             <div class=" d-flex justify-content-between">

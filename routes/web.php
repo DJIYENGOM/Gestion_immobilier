@@ -22,9 +22,13 @@ Route::middleware('isAdmin')->group(function () {
 });
 Route::get('/biens/listeUser', [BienController::class, 'listeBien']);
 // Route::get('/commentaires/ajoutCommentaire/{bienId}', [CommentaireController::class, 'create']);
-Route::get('/commentaires/ajout/{bienId}', [CommentaireController::class, 'creer']);
+Route::get('/commentaires/ajout/{bienId}', [CommentaireController::class, 'creer'])->name('modifieCommentaire');
 Route::post('/commentaires/ajoute', [CommentaireController::class, 'store']);
 
+Route::get('/comments/edit/{id}', [CommentaireController::class, 'edit']);
+Route::post('/comments/edit/{id}', [CommentaireController::class, 'update'])->name('comments.update');
+
+Route::get('/supprimercomment/{id}', [CommentaireController::class, 'destroy']);
 
 
 
