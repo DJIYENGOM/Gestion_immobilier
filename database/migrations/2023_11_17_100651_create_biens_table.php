@@ -14,16 +14,19 @@ return new class extends Migration
         Schema::create('biens', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-
-            $table->enum('nom', ['studio ','duplex','appartement']);
-            $table->enum('categorie', ['luxe','simple','moyen']);
-            $table->string('image')->nullable();
+            $table->string('nom')->nullable();
+            $table->integer('categorie')->default(1);
+            $table->string('image_biens'); 
             $table->text('description')->nullable();
             $table->string('adresse')->nullable();
-            $table->enum('status',['occuper','disponible'])->nullable();
-            // $table->timestamp('date_enregistrement')->useCurrent();
+            $table->integer('status')->default(1);
+            $table->float('surface');
+            $table->integer('nombre_chambre')->default(0);
+            $table->float('dimension_chambre');
+            $table->integer('toillette')->default(1);
+            $table->integer('balcons')->default(1);
+            $table->integer('espace_vert')->default(1);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

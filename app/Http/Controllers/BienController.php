@@ -14,61 +14,99 @@ class BienController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function index(){ // list 
+        
+        $biens  = Bien::all();
 
-
-    public function index()
-    {
-        $biens = Bien::all();
-        return view('biens.liste', compact('biens'));
+        return view('biens.index', compact('biens'));
     }
+
+    // public function index()
+    // {
+    //     $biens = Bien::all();
+    //     return view('biens.liste', compact('biens'));
+    // }
     public function listeBien()
     {
         $biens = Bien::all();
         return view('biens.listeUser', compact('biens'));
     }
    
-
-
     public function create()
     {
-
-        return view('biens.ajout');
-    }
-    public function Ajouter(Request $request)
-    {
-
-// dd($request);
-        $request->validate([
-            'nom' => 'required',
-            'categorie' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,avif',
-            'adresse' => 'required',
-            'description' => 'required',
-            'status' => 'required',
-        ]);
-
         $bien = new Bien();
-        $bien->nom = $request->get('nom');
-        $bien->categorie = $request->get('categorie');
-        $bien->image = $this->storeImage($request->file('image'));
-        $bien->description = $request->get('description');
-        $bien->adresse = $request->get('adresse');
-        $bien->status = $request->get('status');
-
-        $bien->user_id = auth()->user()->id;
-
-        if ($bien->save()) {
-            return redirect('/biens/liste');
-        } else {
-            return 'bonjour';
-        }
+        return view('biens.create', compact('bien'));
     }
+    // public function create()
+    // {
 
-    private function storeImage($image): string
+    //     return view('biens.ajout');
+    // }
+    public function store(Request $request)
     {
+       
+        // Validation des données du formulaire
+        $data = $request->validate([
+            'nom' => 'required',
+            'adresse' => 'required',
+            'nombre_chambre' => 'required|integer',
+            'surface' => 'required|numeric',
+            'status' => 'required|in:0,1',
+            'categorie' => 'required|in:0,1,2',
+            'toillette' => 'required|in:0,1,2',
+            'balcons' => 'required|in:0,1',
+            'espace_vert' => 'required|in:0,1',
+            'image_biens' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'required',
+            'user_id',
+        ]);
+        $data['user_id'] = auth()->user()->id;        
+        // Gérer l'upload de l'image
+        if ($request->hasFile('image_biens')) {
+            $imagePath = $this->storeImage($request->file('image_biens'));
+            $data['image_biens'] = $imagePath;
+        }
+    
+        Bien::create($data);
+    
+            return redirect('/biens');
+    }
+    
+    private function storeImage($image)
+    {
+        // Gérer le stockage de l'image
         return $image->store('images', 'public');
     }
+    public function show($id)
+    {
+        $bien = Bien::find($id);
+    
+        // Vérifiez si le bien a été trouvé
+        if (!$bien) {
+            abort(404); // Affiche une page 404 si le bien n'est pas trouvé
+        }
+    
+        return view('biens.show', compact('bien'));
+    }
+     /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Bien $bien)
+    {
+        // $commentaires = Commentaire::all();
 
+        return view('biens.edit', compact('bien'));
+    }
+
+    // public function show($id)
+    // {
+    //     dd('ok');
+    //     $bien = Bien::find($id);
+
+    //     $commentaires = Commentaire::with('user')->where('bien_id', $id)->get();
+
+    //     return view('commentaires.liste', compact('bien', 'commentaires'));
+    // }
 
 
     public function UpdateBien($id)
@@ -111,29 +149,12 @@ class BienController extends Controller
 
 
 
-    public function show($id)
-    {
-        $bien = Bien::find($id);
-
-        $commentaires = Commentaire::with('user')->where('bien_id', $id)->get();
-
-        return view('commentaires.liste', compact('bien', 'commentaires'));
-    }
     public function supprimerCommentaire($commentaireId)
     {
         $commentaire = Commentaire::find($commentaireId);
         $commentaire->delete();
 
         return redirect()->back()->with('success', 'Le commentaire a été supprimé avec succès.');
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Bien $bien)
-    {
-        //
     }
 
 
