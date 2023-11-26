@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bien;
+use App\Models\User;
 use App\Models\Commentaire;
 use Illuminate\Http\Request;
+use App\Notifications\EnvoiEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
@@ -57,9 +59,18 @@ class BienController extends Controller
         $bien->user_id = auth()->user()->id;
 
         if ($bien->save()) {
+            $users=User::where('role', 'user')->get();
+            foreach($users as $user){
+                $user->notify(new EnvoiEmail());
+            }
+           
             return redirect('/biens/liste');
         } else {
             return 'bonjour';
+        }
+
+        if($bien){
+           
         }
     }
 
