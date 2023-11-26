@@ -94,8 +94,39 @@ class BienController extends Controller
     public function edit(Bien $bien)
     {
         // $commentaires = Commentaire::all();
-
         return view('biens.edit', compact('bien'));
+    }
+
+    public function update(Request $request, Bien $client)
+    {
+        $data = $request->validate([
+            'nom' => 'required',
+            'adresse' => 'required',
+            'nombre_chambre' => 'required|integer',
+            'surface' => 'required|numeric',
+            'status' => 'required|in:0,1',
+            'categorie' => 'required|in:0,1,2',
+            'toillette' => 'required|in:0,1,2',
+            'balcons' => 'required|in:0,1',
+            'espace_vert' => 'required|in:0,1',
+            'image_biens' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'required',
+            'user_id',
+        ]);
+
+        $bien->update($data);
+
+        return redirect('biens/' . $bien->id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Bien $bien)
+    {
+        $bien->delete();
+
+        return redirect('/biens');
     }
 
     // public function show($id)
@@ -109,11 +140,11 @@ class BienController extends Controller
     // }
 
 
-    public function UpdateBien($id)
-    {
-        $bien = Bien::find($id);
-        return view('biens.modifier', compact('bien'));
-    }
+    // public function UpdateBien($id)
+    // {
+    //     $bien = Bien::find($id);
+    //     return view('biens.modifier', compact('bien'));
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -139,13 +170,13 @@ class BienController extends Controller
         return redirect('/biens/liste');
     }
 
-    public function DeleteBien($id)
-    {
-        $biens = Bien::find($id);
-        if ($biens->delete()) {
-            return redirect('/biens/liste');
-        }
-    }
+    // public function DeleteBien($id)
+    // {
+    //     $biens = Bien::find($id);
+    //     if ($biens->delete()) {
+    //         return redirect('/biens/liste');
+    //     }
+    // }
 
 
 
@@ -157,12 +188,4 @@ class BienController extends Controller
         return redirect()->back()->with('success', 'Le commentaire a été supprimé avec succès.');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Bien $bien)
-    {
-        //
-    }
 }
