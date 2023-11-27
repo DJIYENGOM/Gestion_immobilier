@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('imagechambres', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('bien_id');
-            $table->text('image_path'); 
+            $table->float('dimensions_chambres');
+            $table->json('image_path'); 
             $table->foreign('bien_id')->references('id')->on('biens')->onDelete('cascade');            
             $table->timestamps();
         });

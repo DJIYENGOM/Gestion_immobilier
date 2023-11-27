@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Imagechambre;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Bien extends Model
 {
@@ -35,6 +36,11 @@ class Bien extends Model
     public function commentaires()
     {
         return $this->hasMany(Commentaire::class);
+    }
+
+    public function imagechambres()
+    {
+        return $this->hasMany(Imagechambre::class);
     }
     public function scopeStatus($query)
     {

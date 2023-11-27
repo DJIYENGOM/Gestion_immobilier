@@ -49,7 +49,8 @@ Route::get('/biens/{bien}/edit', 'App\Http\Controllers\BienController@edit');
 Route::patch('biens/{bien}', 'App\Http\Controllers\BienController@update');
 Route::delete('biens/{bien}', 'App\Http\Controllers\BienController@destroy');
 
-// Route::get('biens/{id}', [BienController::class, 'show']);
+//ImageChambre
+Route::get('/chambre/create', 'App\Http\Controllers\ImageChambreController@create');
 
 
 require __DIR__ . '/auth.php';
