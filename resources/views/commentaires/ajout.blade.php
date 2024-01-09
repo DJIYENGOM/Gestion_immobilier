@@ -15,14 +15,15 @@
         <img src="{{asset('storage/'.$bien->image)}}" class="img-fluid rounded-start" alt="" style="height: 350px; width: 100%;">
         <div class="row">
             <div class="card-body">
-                <h5 class="card-title">Nom du bien: {{$bien->nom}}</h5>
-                <p class="card-text">Catégorie: {{$bien->categorie}}</p>
-                <p class="card-text">Description: {{ $bien->description}}</p>
-                <p class="card-text">Adresse: {{ $bien->adresse}}</p>
-                <p class="card-text">Statut: {{ $bien->status}}</p>
-                <p class="d-flex justify-content-between">Nombre de commentaires
-                    <span class=" rounded-pill">{{ $bien->commentaires->count() }}</span>
-                </p>
+                <h5 class="card-title d-flex justify-content-between align-items-center">Nom: {{$bien->nom}}
+                    <span class="">Statut: {{ $bien->status}}</span>
+                </h5>
+                <h5 class="card-title d-flex justify-content-between align-items-center">Adresse: {{ $bien->adresse}}
+                    <span class="">Catégorie: {{$bien->categorie}}</span>
+                </h5>
+                <h5 class="card-title d-flex justify-content-between align-items-center">Description: {{ $bien->description}}
+                    <span class="">Commentaires: {{ $bien->commentaires->count() }}</span>
+                </h5>
                 <a href="{{'/biens/listeUser'}}" class="btn btn-info">Retour</a>
             </div>
         </div>
@@ -41,15 +42,12 @@
         <button type="submit" class="btn btn-primary offset-4 mt-2">Soumettre</button>
     </form>
 </div>
-<div class="class">
+<div class="card mb-4 mt-4">
     @foreach($bien->commentaires as $commentaire)
-    <p class="card-text">{{ $commentaire->user->name }} {{ $commentaire->user->prenom }}</p>
-    <span class=" rounded-pill">{{ $commentaire->contenue }}</span>
-
-    <a href="/comments/edit/{{$commentaire->id}}" class="btn btn-primary">🖌</a>
-
-    <a href="/supprimercomment/{{$commentaire->id}}" class="btn btn-danger">🗑</a>
-
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ $commentaire->user->name }} {{ $commentaire->user->prenom }}
+        <span class="">{{$commentaire->contenue}} {{$commentaire->created_at}} </span>
+    </li>
 
     @endforeach
 </div>

@@ -6,8 +6,8 @@ use App\Models\Bien;
 use App\Models\User;
 use App\Models\Commentaire;
 use Illuminate\Http\Request;
-use App\Notifications\EnvoiEmail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 
 class BienController extends Controller
@@ -17,15 +17,25 @@ class BienController extends Controller
      */
 
 
-    public function index()
-    {
-        $biens = Bien::all();
-        return view('biens.liste', compact('biens'));
-    }
+     public function index()
+     {
+         $user = auth()->user();
+     
+         $biens = Bien::where('user_id', $user->id)->get();
+     
+         return view('biens.liste', compact('biens'));
+     }
     public function listeBien()
     {
-        $biens = Bien::all();
-        return view('biens.listeUser', compact('biens'));
+        
+        if (Gate::allows('viewAny', Bien::class)) {
+            $biens = Bien::all();
+            return view('biens.listeUser', compact('biens'));
+        } else {
+            abort(403, 'Unautho0rized action.');
+        }
+        // $biens = Bien::all();
+        // return view('biens.listeUser', compact('biens'));
     }
    
 

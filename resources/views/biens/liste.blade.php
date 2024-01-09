@@ -18,10 +18,8 @@
                             <h5 class="card-title">{{$bien->categorie}} </h5>
                             <span class="card-title"> {{$bien->status}}</span>
                             </div>
-                            <h5 class="card-title">{{$bien->description}}</h5>
-                            <h5 class="card-title">{{$bien->created_at}}</h5>
-                            <a href="/modifierbien/{{$bien->id}}" class="btn btn-primary">🖌</a>
-                            <a href="/biensCommentaires/{{$bien->id}}" class="btn btn-secondary">Liste Avis</a>
+                            <a href="/modifierbien/{{$bien->id}}" class="btn btn-primary">Modifier</a>
+                            <a href="/biensCommentaires/{{$bien->id}}" class="btn btn-secondary">✉</a>
                             <a href="/supprimerbien/{{$bien->id }}" class="btn btn-danger">🗑</a>
                         </div>
 

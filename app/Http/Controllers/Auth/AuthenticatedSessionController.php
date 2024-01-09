@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
 
     $request->session()->regenerate();
 
-    if (Auth::user()->role == "admin") {
+    if (Auth::user()->role == "admin") { 
         return redirect()->intended('/biens/ajout'); 
     }
     if (Auth::user()->role == 'user') {

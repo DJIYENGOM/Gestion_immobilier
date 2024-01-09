@@ -13,7 +13,7 @@ class BienPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class BienPolicy
      */
     public function view(User $user, Bien $bien): bool
     {
-        //
+        return $user->isAdmin && $user->id === $bien->user_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class BienPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role ==="admin";
     }
 
     /**
@@ -37,7 +37,8 @@ class BienPolicy
      */
     public function update(User $user, Bien $bien): bool
     {
-        //
+        return $user->role ==="admin";
+        
     }
 
     /**
@@ -45,7 +46,8 @@ class BienPolicy
      */
     public function delete(User $user, Bien $bien): bool
     {
-        //
+        return $user->role ==="admin";
+        
     }
 
     /**
@@ -53,7 +55,8 @@ class BienPolicy
      */
     public function restore(User $user, Bien $bien): bool
     {
-        //
+        return $user->role ==="admin";
+        
     }
 
     /**
@@ -61,6 +64,7 @@ class BienPolicy
      */
     public function forceDelete(User $user, Bien $bien): bool
     {
-        //
+        return $user->role ==="admin";
+        
     }
 }
