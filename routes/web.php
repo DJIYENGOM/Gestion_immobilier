@@ -7,11 +7,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentaireController;
 
 Route::middleware('isAdmin')->group(function () {
-
+    Route::post('/AjoutBien', [BienController::class, 'Ajouter']);
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/biens/liste', [BienController::class, 'index']);
     Route::get('/Ajout', [BienController::class, 'create']);
-    Route::post('/AjoutBien', [BienController::class, 'Ajouter']);
     Route::get('bien/{id}', [BienController::class, 'show']);
     Route::get('modifierbien/{id}', [BienController::class, 'Updatebien']);
     Route::post('/modifierbien/traitement', [BienController::class, 'UpdatebienTraitement']);

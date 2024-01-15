@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bien;
 use App\Models\User;
 use App\Models\Commentaire;
+use App\Notifications\EnvoiEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -31,9 +32,9 @@ class BienController extends Controller
         if (Gate::allows('viewAny', Bien::class)) {
             $biens = Bien::all();
             return view('biens.listeUser', compact('biens'));
-        } else {
-            abort(403, 'Unautho0rized action.');
-        }
+        } //else {
+        //     abort(403, 'Unautho0rized action.');
+        // }
         // $biens = Bien::all();
         // return view('biens.listeUser', compact('biens'));
     }
@@ -67,21 +68,20 @@ class BienController extends Controller
         $bien->status = $request->get('status');
 
         $bien->user_id = auth()->user()->id;
+        $bien->save();
+        return redirect('/biens/liste');
 
-        if ($bien->save()) {
-            $users=User::where('role', 'user')->get();
-            foreach($users as $user){
-                $user->notify(new EnvoiEmail());
-            }
+        // if ($bien->save()) {
+        //     $users=User::where('role', 'user')->get();
+        //     foreach($users as $user){
+        //         $user->notify(new EnvoiEmail());
+        //     }
            
-            return redirect('/biens/liste');
-        } else {
-            return 'bonjour';
-        }
+        //     return redirect('/biens/liste');
+        // } else {
+        //     return 'bonjour';
+        // }
 
-        if($bien){
-           
-        }
     }
 
     private function storeImage($image): string
