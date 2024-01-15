@@ -11,7 +11,8 @@ Route::middleware('isAdmin')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/biens/liste', [BienController::class, 'index']);
     Route::get('/Ajout', [BienController::class, 'create']);
-    Route::get('bien/{id}', [BienController::class, 'show']);
+    Route::post('/AjoutBien', [BienController::class, 'Ajouter']);
+    // Route::get('bien/{id}', [BienController::class, 'show']);
     Route::get('modifierbien/{id}', [BienController::class, 'Updatebien']);
     Route::post('/modifierbien/traitement', [BienController::class, 'UpdatebienTraitement']);
     Route::get('/supprimerbien/{id}', [BienController::class, 'DeleteBien']);
@@ -41,5 +42,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/biens','App\Http\Controllers\BienController@index');
+Route::get('/biens/create','App\Http\Controllers\BienController@create');
+Route::post('/biens', 'App\Http\Controllers\BienController@store');
+Route::get('/biens/{bien}', 'App\Http\Controllers\BienController@show');
+Route::get('/biens/{bien}/edit', 'App\Http\Controllers\BienController@edit');
+Route::patch('biens/{bien}', 'App\Http\Controllers\BienController@update');
+Route::delete('biens/{bien}', 'App\Http\Controllers\BienController@destroy');
+
+//ImageChambre
+Route::get('/chambre/create', 'App\Http\Controllers\ImageChambreController@create');
+
 
 require __DIR__ . '/auth.php';
